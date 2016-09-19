@@ -19,7 +19,15 @@ setwd("/Users/Kimminhyeok/Documents/Datamining/assignment1")
 getwd()
 data1 <- read.csv("seoul.csv",fileEncoding = "CP949")
 
-# 전처리 : 강우량단위 24시간 -> 날짜 
+# 전처리 : 강우량단위 24시간 -> 날짜
+# 설명
+#   seoul.csv에 있는 row는 날짜당 시간별로 8760개가 존재한다. 이것을 365일 날짜별로 비 온날, 안 온날로 구분한 벡터로 축소한다.
+#   index_per_day : 날짜가 시작하는 index 번호나열 벡터.
+#   rainy_days : 비온 날을 1, 0으로 구분해 저장할 365짜리 벡터.
+#     1.강우량을 24개 단위로 나누어읽는다.(날짜단위)
+#     2.24개의 row중 하나라도 0이 아닌 데이터가 있는지 확인한다 if(any(day))
+#       2.1 비온시간이 존재한다면 해당 날은 비가 온 날로 표시 rainy_days[i] <- 1
+#       2.2 비온시간이 없다면 해당날은 비가 안 온 날로 표시 rainy_days[i] <- 0
 index_per_day <- seq(from=1,to=8760,by=24)
 rainy_days <- length(365)
 for(i in 1:365){
