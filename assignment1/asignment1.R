@@ -40,3 +40,38 @@ for(i in 1:365){
 
 # 저장
 write.csv(rainy_days,file="rainy_days.csv")
+
+#예측정확도계산1
+predict1 <- function(x,k){
+  #x:날씨데이터, k:윈도우 길이
+  n <- length(x)  #데이터 총 길이
+  k2 <- k/2       #윈도우 길이의 반
+  pred <- vector(length = n-k)  #예측값 저장할 벡터 : 윈도우 크기만큼 덜 필요.
+  for(i in 1:(n-k)){
+    if(sum(x[i:(i+(k-1))]) >= k2)
+      pred[i] <- 1
+    else
+      pred[i] <- 0
+  }
+  return(mean(abs(pred-x[(k+1):n])))
+}
+
+#예측정확도계산2
+predict2 <- function(x,k){
+  n <- length(x)
+  k2 <- k/2
+  pred <- vector(length = n-k)
+  csx <- c(0,cumsum(x))
+  for(i in 1:(n-k)){
+    if(csx[i+k] - csx[i] >= k2)
+      pred[i] <- 1
+    else
+      pred[i] <- 0
+  }
+  return(mean(abs(pred-x[(k+1):n])))
+}
+
+# window 크기에 따른 정확도 결과
+rate1 <- c(length=100)
+for(i in 3:100){ rate1[i-2] <- predict2(rainy_days,i) }
+rate1
