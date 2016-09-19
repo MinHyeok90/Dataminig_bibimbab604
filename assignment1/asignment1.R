@@ -15,9 +15,9 @@
 #   
 
 #mac에서 파일 로딩
-setwd("/Users/Kimminhyeok/Documents/Datamining")
+setwd("/Users/Kimminhyeok/Documents/Datamining/assignment1")
 getwd()
-data1<-read.csv("seoul.cvs")
+data1 <- read.csv("seoul.csv",fileEncoding = "CP949")
 
 # 전처리 : 강우량단위 24시간 -> 날짜
 rainy_days <- length(365)
@@ -31,4 +31,3 @@ for(i in 1:365){
 
 # 저장
 write.csv(rainy_days,file="rainy_days.csv")
-
