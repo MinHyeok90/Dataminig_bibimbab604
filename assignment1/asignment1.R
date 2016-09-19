@@ -19,7 +19,8 @@ setwd("/Users/Kimminhyeok/Documents/Datamining/assignment1")
 getwd()
 data1 <- read.csv("seoul.csv",fileEncoding = "CP949")
 
-# 전처리 : 강우량단위 24시간 -> 날짜
+# 전처리 : 강우량단위 24시간 -> 날짜 
+index_per_day <- seq(from=1,to=8760,by=24)
 rainy_days <- length(365)
 for(i in 1:365){
   day<-data1$강우량[index_per_day[i]:(index_per_day[i]+23)]
