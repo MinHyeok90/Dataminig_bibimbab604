@@ -29,7 +29,7 @@ data1 <- read.csv("seoul.csv",fileEncoding = "CP949")
 #       2.1 비온시간이 존재한다면 해당 날은 비가 온 날로 표시 rainy_days[i] <- 1
 #       2.2 비온시간이 없다면 해당날은 비가 안 온 날로 표시 rainy_days[i] <- 0
 index_per_day <- seq(from=1,to=8760,by=24)
-rainy_days <- length(365)
+rainy_days <- vector(length=365)
 for(i in 1:365){
   day<-data1$강우량[index_per_day[i]:(index_per_day[i]+23)]
   if(any(day))
@@ -75,3 +75,30 @@ predict2 <- function(x,k){
 rate1 <- c(length=100)
 for(i in 3:100){ rate1[i-2] <- predict2(rainy_days,i) }
 rate1
+
+#강우량, 적설량, 건구온도, 기압, 상대습도, 풍속, 이슬점 온도, 공기밀도, 적설량, 운량
+#전체평균 구하기
+mean(data1$건구온도)
+
+#일별 평균구하기
+means_func <- function(){
+  month1 <- vector(length=365)
+  day1 <- vector(length=365)
+  mean1 <- vector(length=365)
+  mean2 <- vector(length=365)
+  mean3 <- vector(length=365)
+  for(i in 1:365){
+    month1[i] <- data1$월[index_per_day[i]]
+    day1[i] <- data1$일[index_per_day[i]]
+    #아래에서 추출하고 싶은 column명을 작성하세요.
+    one_day1 <- data1$강우량[index_per_day[i]:(index_per_day[i]+23)]
+    one_day2<- data1$건구온도[index_per_day[i]:(index_per_day[i]+23)]
+    one_day3<- data1$운량[index_per_day[i]:(index_per_day[i]+23)]
+    mean1[i] <- mean(one_day1)
+    mean2[i] <- mean(one_day2)
+    mean3[i] <- mean(one_day3)
+  }
+  return(data.frame(month1, day1, mean1,mean2,mean3))
+}
+means_func()
+
