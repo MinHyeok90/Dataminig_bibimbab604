@@ -87,6 +87,9 @@ means_func <- function(){
   mean1 <- vector(length=365)
   mean2 <- vector(length=365)
   mean3 <- vector(length=365)
+  m1max <- 0
+  m2max <- 0
+  m3max <- 0
   for(i in 1:365){
     month1[i] <- data1$월[index_per_day[i]]
     day1[i] <- data1$일[index_per_day[i]]
@@ -97,8 +100,11 @@ means_func <- function(){
     mean1[i] <- mean(one_day1)
     mean2[i] <- mean(one_day2)
     mean3[i] <- mean(one_day3)
+    if (m1max < mean1[i]) m1max<-mean1[i]
+    if (m2max < mean2[i]) m2max<-mean2[i]
+    if (m3max < mean3[i]) m3max<-mean3[i]
   }
-  return(data.frame(month1, day1, mean1,mean2,mean3))
+  return(data.frame(month1, day1, mean1/m1max, mean2/m2max, mean3/m3max))
 }
 means_func()
 
